@@ -22,7 +22,15 @@
 </template>
 
 <script setup lang="ts">
-const card = reactive({
+interface Card {
+  question: string,
+  answer: string,
+  category: string,
+  compartment: number,
+  nextTest: Date,
+}
+
+const card = reactive<Card>({
   question: '',
   answer: '',
   category: 'russian',
@@ -41,7 +49,36 @@ const categories = [
   }
 ]
 
-const addCard = () => {
-  // localStorage.setItem()
+const allCards = reactive<Card[]>([]);
+
+onMounted(() => {
+  const storedCards = localStorage.getItem('storedCards');
+  if (storedCards) {
+    const parsedCards = JSON.parse(storedCards);
+    allCards.push(...parsedCards);
+  }
+})
+
+const resetCard = () => {
+  card.question = '';
+  card.answer = '';
 }
+
+const formIsComplete = computed(() => {
+  return card.question !== '' && card.answer !== '';
+});
+
+const addCard = () => {
+  if (!formIsComplete.value) window.alert('add required fields')
+  else {
+    allCards.push({...card});
+    resetCard()
+  }
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem('storedCards', JSON.stringify(allCards));
+}
+
+watch(allCards, saveToLocalStorage, { deep: true });
 </script>
