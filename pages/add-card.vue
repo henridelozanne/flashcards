@@ -22,13 +22,10 @@
 </template>
 
 <script setup lang="ts">
-interface Card {
-  question: string,
-  answer: string,
-  category: string,
-  compartment: number,
-  nextTest: Date,
-}
+import type { Card } from '../types';
+import { allCards, initializeCards } from '../composables/useGetCards';
+
+initializeCards();
 
 const card = reactive<Card>({
   question: '',
@@ -49,24 +46,15 @@ const categories = [
   }
 ]
 
-const allCards = reactive<Card[]>([]);
 
-onMounted(() => {
-  const storedCards = localStorage.getItem('storedCards');
-  if (storedCards) {
-    const parsedCards = JSON.parse(storedCards);
-    allCards.push(...parsedCards);
-  }
-})
+const formIsComplete = computed(() => {
+  return card.question !== '' && card.answer !== '';
+});
 
 const resetCard = () => {
   card.question = '';
   card.answer = '';
 }
-
-const formIsComplete = computed(() => {
-  return card.question !== '' && card.answer !== '';
-});
 
 const addCard = () => {
   if (!formIsComplete.value) window.alert('add required fields')
