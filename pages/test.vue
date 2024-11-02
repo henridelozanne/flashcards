@@ -26,7 +26,8 @@
 <script lang="ts" setup>
 import { allCards, initializeCards } from '../composables/useGetCards';
 import type { Card } from '../types';
-import { isToday, isBefore, startOfToday } from 'date-fns';
+import { timings } from '../constants';
+import { isToday, isBefore, startOfToday, add } from 'date-fns';
 
 initializeCards();
 
@@ -34,7 +35,7 @@ const todaysCards: Ref<Card[]> = ref([]);
 
 onMounted(() => {
   todaysCards.value = allCards.filter((card: Card) => {
-    return isToday(card.nextTest) || isBefore(card.nextTest, startOfToday());
+    return card.nextTest && (isToday(card.nextTest) || isBefore(card.nextTest, startOfToday()));
   })
 });
 
@@ -77,10 +78,15 @@ const resetGame = () => {
 }
 
 const evaluate = (goodAnswer: boolean) => {
+  if (currentCard.value.compartment === 7) return;
   if (goodAnswer) {
+    todaysCards.value[turn.value].compartment += 1;
+    todaysCards.value[turn.value].nextTest = add(new Date(), { days: timings[currentCard.value.compartment] });
     questionsWellAnswered.value.push(currentCard.value);
   }
   if (!goodAnswer) {
+    todaysCards.value[turn.value].compartment = 1;
+    todaysCards.value[turn.value].nextTest = new Date();
     questionsBadAnswered.value.push(currentCard.value);
   }
   questionIsDisplayed.value = false;
