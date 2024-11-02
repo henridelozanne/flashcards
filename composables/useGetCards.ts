@@ -14,4 +14,10 @@ const initializeCards = () => {
   })
 }
 
-export { allCards, initializeCards };
+const updateLocalStorage = (updatedCard: Card) : void => {
+  const updatedCardIndex = allCards.findIndex((card) => card.id === updatedCard.id);
+  allCards.splice(updatedCardIndex, 1, updatedCard);
+  localStorage.setItem('storedCards', JSON.stringify(allCards));
+}
+
+export { allCards, initializeCards, updateLocalStorage };

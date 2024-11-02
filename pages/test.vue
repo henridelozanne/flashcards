@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { allCards, initializeCards } from '../composables/useGetCards';
+import { allCards, initializeCards, updateLocalStorage } from '../composables/useGetCards';
 import type { Card } from '../types';
 import { timings } from '../constants';
 import { isToday, isBefore, startOfToday, add } from 'date-fns';
@@ -33,10 +33,14 @@ initializeCards();
 
 const todaysCards: Ref<Card[]> = ref([]);
 
-onMounted(() => {
+const getTodaysCards = () : void => {
   todaysCards.value = allCards.filter((card: Card) => {
     return card.nextTest && (isToday(card.nextTest) || isBefore(card.nextTest, startOfToday()));
   })
+};
+
+onMounted(() => {
+  getTodaysCards();
 });
 
 const question: Ref<string> = ref('');
@@ -59,10 +63,15 @@ const launchNewTurn = () => {
 }
 
 const startTest = () => {
-  turn.value = 0;
-  launchNewTurn();
-  questionIsDisplayed.value = true;
-  gameIsOn.value = true;
+  getTodaysCards();
+  if (todaysCards.value.length) {
+    turn.value = 0;
+    launchNewTurn();
+    questionIsDisplayed.value = true;
+    gameIsOn.value = true;
+  } else {
+    window.alert('no card for today');
+  }
 }
 
 const flip = () => {
@@ -89,6 +98,7 @@ const evaluate = (goodAnswer: boolean) => {
     todaysCards.value[turn.value].nextTest = new Date();
     questionsBadAnswered.value.push(currentCard.value);
   }
+  updateLocalStorage(currentCard.value);
   questionIsDisplayed.value = false;
   answerIsDisplayed.value = false;
   if (turn.value < todaysCards.value.length - 1) {
