@@ -1,11 +1,8 @@
 <template>
   <div>
-    <h1>All cards</h1>
+    <h1>Cards</h1>
     <div class="cards-wrapper">
-      <div class="card" v-for="(card, index) in allCards" :key="index">
-        <p>{{ card.question }}</p>
-        <p>{{ card.answer }}</p>
-      </div>
+      <Card v-for="card in allCards" :key="card.id" :card="card" />
     </div>
   </div>
 </template>
@@ -22,12 +19,5 @@ initializeCards();
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-
-  .card {
-    border: 1px solid black;
-    padding: 10px;
-    min-width: 70px;
-    text-align: center;
-  }
 }
 </style>

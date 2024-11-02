@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>test</h1>
+    <h1>Test</h1>
     <button @click="startTest">Start</button>
     <div class="game-wrapper">
       <div v-if="gameIsOn" class="stats-wrapper">

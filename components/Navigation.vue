@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li>
-      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/">Cards</RouterLink>
     </li>
     <li>
       <RouterLink to="/add-card">Add card</RouterLink>
