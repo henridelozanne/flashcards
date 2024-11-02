@@ -24,10 +24,12 @@
 <script setup lang="ts">
 import type { Card } from '../types';
 import { allCards, initializeCards } from '../composables/useGetCards';
+import { generateId } from '../utils';
 
 initializeCards();
 
 const card = reactive<Card>({
+  id: generateId(),
   question: '',
   answer: '',
   category: 'russian',
@@ -52,6 +54,7 @@ const formIsComplete = computed(() => {
 });
 
 const resetCard = () => {
+  card.id = generateId();
   card.question = '';
   card.answer = '';
 }
