@@ -3,11 +3,13 @@
     <h1>Test</h1>
     <button @click="startTest">Start</button>
     <div class="game-wrapper">
-      <div v-if="gameIsOn" class="stats-wrapper">
-        <p>{{ turn + 1 }} / {{ todaysCards.length }}</p>
-        <p>{{ questionsWellAnswered.length }} good answers / {{ turn  }}</p>
-        <p>{{ questionsBadAnswered.length }} bad answers / {{ turn }}</p>
-      </div>
+      <GameStats
+        :gameIsOn="gameIsOn"
+        :turn="turn"
+        :totalTurns="todaysCards.length"
+        :goodAnswersTotal="questionsWellAnswered.length"
+        :badAnswersTotal="questionsBadAnswered.length"
+      />
       <div v-if="questionIsDisplayed" class="question">
         <p>{{ question }}</p>
         <button @click="flip">Flip</button>
@@ -110,3 +112,25 @@ const evaluate = (goodAnswer: boolean) => {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.question {
+  border: 1px solid black;
+  text-align: center;
+  font-size: 3rem;
+  width: 300px;
+  margin: 20px auto 0;
+  padding: 20px 40px;
+  border-radius: 4px;
+}
+
+.answer {
+  border: 1px solid black;
+  text-align: center;
+  font-size: 3rem;
+  width: 300px;
+  margin: 20px auto 0;
+  padding: 20px 40px;
+  border-radius: 4px;
+}
+</style>
