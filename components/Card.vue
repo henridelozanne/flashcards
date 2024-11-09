@@ -57,6 +57,7 @@ const confirm = (type: 'question' | 'answer') => {
   border-radius: 4px;
   padding: 10px;
   min-width: 70px;
+  max-width: 200px;
   
   .card-main {
     text-align: center;

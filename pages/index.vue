@@ -27,6 +27,7 @@ const updateField = (payload: { card: Card, type: 'question' | 'answer', value: 
 <style lang="scss">
 .cards-wrapper {
   display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
   gap: 20px;
 }
