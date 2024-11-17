@@ -2,7 +2,7 @@
   <div>
     <h1>Cards</h1>
     <div class="cards-wrapper">
-      <Card
+      <RecapCard
         v-for="card in allCards"
         :key="card.id"
         :card="card"

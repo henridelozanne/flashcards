@@ -10,17 +10,7 @@
         :goodAnswersTotal="questionsWellAnswered.length"
         :badAnswersTotal="questionsBadAnswered.length"
       />
-      <div v-if="questionIsDisplayed" class="question">
-        <p>{{ question }}</p>
-        <button @click="flip">Flip</button>
-      </div>
-      <div v-if="answerIsDisplayed" class="answer">
-        <p>{{ answer }}</p>
-        <div class="evaluate-wrapper">
-          <button @click="evaluate(true)">Good answer</button>
-          <button @click="evaluate(false)">Bad answer</button>
-        </div>
-      </div>
+      <TestCard v-if="gameIsOn" :questionIsDisplayed="questionIsDisplayed" :answerIsDisplayed="answerIsDisplayed" :question="question" :answer="answer" @flip="flip" @evaluate="evaluate" />
     </div>
   </div>
 </template>
@@ -112,25 +102,3 @@ const evaluate = (goodAnswer: boolean) => {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.question {
-  border: 1px solid black;
-  text-align: center;
-  font-size: 3rem;
-  width: 300px;
-  margin: 20px auto 0;
-  padding: 20px 40px;
-  border-radius: 4px;
-}
-
-.answer {
-  border: 1px solid black;
-  text-align: center;
-  font-size: 3rem;
-  width: 300px;
-  margin: 20px auto 0;
-  padding: 20px 40px;
-  border-radius: 4px;
-}
-</style>
