@@ -22,7 +22,8 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .stats-wrapper {
-  border: 1px solid black;
+  border: 0.125rem solid black;
+  border-radius: 0.9375em;
   padding: 10px;
   margin: 0 auto;
   text-align: center;

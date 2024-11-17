@@ -6,9 +6,11 @@
       <input v-if="isVisibleInput.answer" type="text" v-model="inputs.answer" @keyup.enter="confirm('answer')">
       <p v-else @click="editCard('answer')">{{ props.card.answer }}</p>
     </div>
-    <p>Category: {{ props.card.category }}</p>
-    <p>Compartment: {{ props.card.compartment }}</p>
-    <p>Next date: {{ displayedDate }}</p>
+    <div>
+      <p>Category: {{ props.card.category }}</p>
+      <p>Compartment: {{ props.card.compartment }}</p>
+      <p>Next date: {{ displayedDate }}</p>
+    </div>
   </div>
 </template>
 
@@ -53,19 +55,29 @@ const confirm = (type: 'question' | 'answer') => {
 
 <style lang="scss">
 .card {
-  border: 1px solid black;
-  border-radius: 4px;
+  border: 0.125rem solid black;
+  border-radius: 0.9375em;
   padding: 10px;
   min-width: 70px;
   max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   
   .card-main {
     text-align: center;
     font-size: 2rem;
-    border-bottom: 1px solid black;
+    border-bottom: 0.125rem solid black;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     p {
       cursor: pointer;
+      margin-block-start: 1rem;
+      margin-block-end: 1rem;
     }
   }
 }

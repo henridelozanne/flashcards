@@ -10,7 +10,7 @@
         :goodAnswersTotal="questionsWellAnswered.length"
         :badAnswersTotal="questionsBadAnswered.length"
       />
-      <TestCard v-if="gameIsOn" :questionIsDisplayed="questionIsDisplayed" :answerIsDisplayed="answerIsDisplayed" :question="question" :answer="answer" @flip="flip" @evaluate="evaluate" />
+      <TestCard v-if="gameIsOn" :answerIsDisplayed="answerIsDisplayed" :question="question" :answer="answer" @flip="flip" @evaluate="evaluate" />
     </div>
   </div>
 </template>
@@ -39,7 +39,6 @@ const question: Ref<string> = ref('');
 const answer: Ref<string> = ref('');
 const turn: Ref<number> = ref(0);
 const gameIsOn: Ref<boolean> = ref(false);
-const questionIsDisplayed: Ref<boolean> = ref(false);
 const answerIsDisplayed: Ref<boolean> = ref(false);
 const questionsWellAnswered: Ref<Card[]> = ref([]);
 const questionsBadAnswered: Ref<Card[]> = ref([]);
@@ -51,7 +50,6 @@ const currentCard = computed(() => {
 const launchNewTurn = () => {
   question.value = currentCard.value.question;
   answer.value = currentCard.value.answer;
-  questionIsDisplayed.value = true;
 }
 
 const startTest = () => {
@@ -59,7 +57,6 @@ const startTest = () => {
   if (todaysCards.value.length) {
     turn.value = 0;
     launchNewTurn();
-    questionIsDisplayed.value = true;
     gameIsOn.value = true;
   } else {
     window.alert('no card for today');
@@ -67,7 +64,6 @@ const startTest = () => {
 }
 
 const flip = () => {
-  questionIsDisplayed.value = false;
   answerIsDisplayed.value = true;
 }
 
@@ -91,7 +87,6 @@ const evaluate = (goodAnswer: boolean) => {
     questionsBadAnswered.value.push(currentCard.value);
   }
   updateLocalStorage(currentCard.value);
-  questionIsDisplayed.value = false;
   answerIsDisplayed.value = false;
   if (turn.value < todaysCards.value.length - 1) {
     turn.value += 1;
